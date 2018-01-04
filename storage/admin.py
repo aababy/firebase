@@ -12,11 +12,12 @@ class AppAdmin(admin.ModelAdmin):
         "/static/app_admin.js")
 
 class TagAdmin(admin.ModelAdmin):
-    search_fields = ['app']
+    list_filter = ['app']
 
 class GraphAdmin(admin.ModelAdmin):
     list_display = ('name', 'display')
     readonly_fields = ('display',)
+    list_filter = ['tag']
 
     class Media:
         js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 

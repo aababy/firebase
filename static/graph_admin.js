@@ -27,9 +27,7 @@
         'contentType': file.type
       };
 
-      // Push to child path.
-      // [START oncomplete]
-      storageRef.child('images/' + file.name).put(file, metadata).then(function(snapshot) {
+      storageRef.child('graphs/' + file.name).put(file, metadata).then(function(snapshot) {
         var url = snapshot.downloadURL;
         console.log('File available at', url);
         let dot = file.name.indexOf('.');
