@@ -34,6 +34,15 @@
 
         function handlePublish(evt) {
             console.log('click');
+
+            $.get("/ajax/publish/", {}, function (ret) {
+                let json = JSON.stringify(ret)
+                storageRef.child('app/data').putString(json).then(function (snapshot) {
+                    console.log('File available at', url);
+                }).catch(function (error) {
+                    console.error('Upload failed:', error);
+                });
+            })
         }
     }
 })(django.jQuery);
