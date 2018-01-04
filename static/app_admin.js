@@ -18,27 +18,8 @@
     var storageRef = firebase.storage().ref();
     console.log('storageRef:' + storageRef);
 
-    function handleFileSelect(evt) {
-      evt.stopPropagation();
-      evt.preventDefault();
-      var file = evt.target.files[0];
-
-      var metadata = {
-        'contentType': file.type
-      };
-
-      // Push to child path.
-      // [START oncomplete]
-      storageRef.child('images/' + file.name).put(file, metadata).then(function(snapshot) {
-        var url = snapshot.downloadURL;
-        console.log('File available at', url);
-        let dot = file.name.indexOf('.');
-        let name = file.name.slice(0, dot);
-        document.getElementById('id_name').value = name;
-        document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
-      }).catch(function(error) {
-        console.error('Upload failed:', error);
-      });
+    function handlePublish(evt) {
+        console.log('click');
     }
 
     window.onload = function() {
@@ -49,9 +30,9 @@
         {
           let path = window.location.pathname;
           console.log(path);
-          $('#id_url').after('<input type="file" id="upload_file" name="file"/>') //插入按钮
-          $('#upload_file').css("marginLeft", "8px")
-          $('#upload_file').change(handleFileSelect);
+          $('#id_name').after('<input type="button" id="id_publish" class="button" name="publish" value="Publish"></input>') //插入按钮
+          $('#id_publish').css("marginLeft", "8px")
+          $('#id_publish').click(handlePublish);
     
           auth.onAuthStateChanged(function(user) {
             if (user) {
