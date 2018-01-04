@@ -1,7 +1,11 @@
-(function($) {
-    var initialize = false;
-    if (!initialize) {
-        initialize = true;
+(function ($) {
+    window.onload = function () {
+        //如果不是编辑界面，那么就不执行下面的操作
+        if (window.location.pathname == '/admin/storage/app/') {
+            return;
+        }
+
+        //初始化
         var config = {
             apiKey: "AIzaSyBvcx_zTTFWyOlkE8x1y1_I1bSl3zaFkrA",
             authDomain: "hidd-bigb001.firebaseapp.com",
@@ -11,39 +15,25 @@
             messagingSenderId: "278231656471"
         };
         firebase.initializeApp(config);
-        console.log('initializeApp');
-    }
 
-    var auth = firebase.auth();
-    var storageRef = firebase.storage().ref();
-    console.log('storageRef:' + storageRef);
+        var auth = firebase.auth();
+        var storageRef = firebase.storage().ref();
 
-    function handlePublish(evt) {
-        console.log('click');
-    }
+        $('#id_name').after('<input type="button" id="id_publish" class="button" name="publish" value="Publish"></input>') //插入按钮
+        $('#id_publish').css("marginLeft", "8px")
+        $('#id_publish').click(handlePublish);
 
-    window.onload = function() {
-        // if (window.location.pathname != '/admin/polls/product/9/change/') {
-        //   return;
-        // } else 
-        
-        {
-          let path = window.location.pathname;
-          console.log(path);
-          $('#id_name').after('<input type="button" id="id_publish" class="button" name="publish" value="Publish"></input>') //插入按钮
-          $('#id_publish').css("marginLeft", "8px")
-          $('#id_publish').click(handlePublish);
-    
-          auth.onAuthStateChanged(function(user) {
+        auth.onAuthStateChanged(function (user) {
             if (user) {
-              console.log('Anonymous user signed-in.', user);
-              //document.getElementById('file').disabled = false;
+                console.log('Anonymous user signed-in.', user);
             } else {
-              console.log('There was no anonymous session. Creating a new anonymous user.');
-              // Sign the user in anonymously since accessing Storage requires the user to be authorized.
-              auth.signInAnonymously();
+                console.log('There was no anonymous session. Creating a new anonymous user.');
+                auth.signInAnonymously();
             }
-          });
+        });
+
+        function handlePublish(evt) {
+            console.log('click');
         }
-      }
+    }
 })(django.jQuery);

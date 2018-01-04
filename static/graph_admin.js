@@ -6,7 +6,6 @@
         }
 
         //初始化
-        initialize = true;
         var config = {
             apiKey: "AIzaSyBvcx_zTTFWyOlkE8x1y1_I1bSl3zaFkrA",
             authDomain: "hidd-bigb001.firebaseapp.com",
@@ -27,10 +26,8 @@
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 console.log('Anonymous user signed-in.', user);
-                //document.getElementById('file').disabled = false;
             } else {
                 console.log('There was no anonymous session. Creating a new anonymous user.');
-                // Sign the user in anonymously since accessing Storage requires the user to be authorized.
                 auth.signInAnonymously();
             }
         });
