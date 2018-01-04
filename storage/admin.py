@@ -4,8 +4,15 @@ from django.contrib import messages
 from storage.models import App, Tag, Graph
 
 class GraphAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display', 'url')
+    list_display = ('name', 'display')
     readonly_fields = ('display',)
+
+    class Media:
+        js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js', 
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js',
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
+        "/static/graph_admin.js")
 
 
 admin.site.register(App)
