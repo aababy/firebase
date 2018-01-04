@@ -1,3 +1,8 @@
+#coding:utf-8
 from django.contrib import admin
+from django.contrib import messages
+from storage.models import App, Tag, Graph
 
-# Register your models here.
+admin.site.register(App)
+admin.site.register(Tag)
+admin.site.register(Graph)

@@ -8,14 +8,14 @@ from django.utils.safestring import mark_safe
 
 class App(models.Model):
     name = models.CharField(max_length=200)
-    tag_order = models.CharField(max_length=400)
+    tag_order = models.CharField(max_length=400, default="", blank=True)
 
     def __unicode__(self):
         return self.name
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)
-    image_order = models.CharField(max_length=400)
+    image_order = models.CharField(max_length=400, blank=True)
 
     app = models.ManyToManyField(App)   # app
 
@@ -23,14 +23,14 @@ class Tag(models.Model):
         return self.name
 
 class Graph(models.Model):
-    name = models.CharField(max_length=200)             # 姓名
-    url = models.CharField(max_length=400, default="")  # URL
+    name = models.CharField(max_length=200)                         # 姓名
+    url = models.CharField(max_length=400, default="", blank=True)  # URL
 
     def display(self):
         return mark_safe(u'<img src="%s" width="120px" />' % self.url)
-    display.short_description = u'图片'
+    display.short_description = u'graph'
 
-    tag = models.ManyToManyField(Tag)   # tag
+    tag = models.ManyToManyField(Tag, blank=True)   # tag
 
     def __unicode__(self):
         return self.name
