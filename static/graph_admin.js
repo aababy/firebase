@@ -22,10 +22,12 @@
         $('#id_url').after('<input type="file" id="upload_file" name="file"/>') //插入按钮
         $('#upload_file').css("marginLeft", "8px")
         $('#upload_file').change(handleFileSelect);
+        document.getElementById('upload_file').disabled = true;
 
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 console.log('Anonymous user signed-in.', user);
+                document.getElementById('upload_file').disabled = false;
             } else {
                 console.log('There was no anonymous session. Creating a new anonymous user.');
                 auth.signInAnonymously();

@@ -22,10 +22,12 @@
         $('#id_name').after('<input type="button" id="id_publish" class="button" name="publish" value="Publish"></input>') //插入按钮
         $('#id_publish').css("marginLeft", "8px")
         $('#id_publish').click(handlePublish);
+        document.getElementById('id_publish').disabled = true;
 
         auth.onAuthStateChanged(function (user) {
-            if (user) {
+            if (user) {               
                 console.log('Anonymous user signed-in.', user);
+                document.getElementById('id_publish').disabled = false;
             } else {
                 console.log('There was no anonymous session. Creating a new anonymous user.');
                 auth.signInAnonymously();
@@ -37,7 +39,7 @@
                 let json = JSON.stringify(ret)
                 storageRef.child('app/data').putString(json).then(function (snapshot) {
                     alert('publish succeed.');
-                    // $.get("#/ajax/message/", { 'msg': 'publish_succeed.', 'path': window.location.pathname }, function (ret) { })
+                    // $.get("/ajax/message/", { 'msg': 'publish_succeed.', 'path': window.location.pathname }, function (ret) { })
                 }).catch(function (error) {
                     alert('publish failed.');
                 });
