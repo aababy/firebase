@@ -35,19 +35,7 @@
         });
 
         function handlePublish(evt) {
-            //publish app
-            // let app_name = document.getElementById('id_name').value
-            // $.get("/ajax/publish/", {'filename': 'app', 'appname': app_name}, function (ret) {
-            //     let id_name = document.getElementById('id_name').value
-            //     let json = JSON.stringify(ret)
-            //     storageRef.child('data/' + id_name + '/app').putString(json).then(function (snapshot) {
-            //         alert('publish succeed.');
-            //     }).catch(function (error) {
-            //         alert('publish failed.');
-            //     });
-            // })
-
-            publish('graph')
+            publish('app')
         }
 
         function publish(name) {
@@ -56,9 +44,15 @@
                 let id_name = document.getElementById('id_name').value
                 let json = JSON.stringify(ret)
                 storageRef.child('data/' + id_name + '/' + name + '.json').putString(json).then(function (snapshot) {
-                    alert('publish succeed.');
+                    if (name == 'app') {
+                        publish('tag')
+                    } else if (name == 'tag') {
+                        publish('graph')
+                    } else {
+                        alert('publish succeed.')
+                    }
                 }).catch(function (error) {
-                    alert('publish failed.');
+                    alert('publish failed.')
                 });
             })
         }

@@ -16,9 +16,14 @@ class AppAdmin(admin.ModelAdmin):
         "/static/app_admin.js")
 
 class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'display_name', 'apps')
     list_filter = ['app']
     filter_horizontal=('app',)
     search_fields = ['app__name']
+
+    def apps(self, tag):
+        app_names = map(lambda x: x.name, tag.app.all())
+        return ' | '.join(app_names)
 
 class GraphAdmin(admin.ModelAdmin):
     list_display = ('name', 'display', 'tags')
