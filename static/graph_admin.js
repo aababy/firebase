@@ -49,7 +49,8 @@
                 document.getElementById('id_name').value = name;
                 document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
             }).catch(function (error) {
-                alert('Upload failed.' + error)
+                console.error('Upload failed:', error);
+                alert('Upload failed.')
             });
         }
     }

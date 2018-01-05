@@ -21,9 +21,8 @@ def ajax_publish(request):
                 data = {}
                 data['name'] = query.name
                 data['tag_order'] = query.tag_order
-                data['version'] = '1'
-                jsonData.append(data)
-                break
+                data['version'] = query.version
+                return HttpResponse(json.dumps(data), content_type='application/json')
 
     elif name == 'tag':
         for query in Tag.objects.all():
@@ -33,7 +32,7 @@ def ajax_publish(request):
             data['image_order'] = query.image_order
             app_names = map(lambda x: x.name, query.app.all())
             data['app'] = '|'.join(app_names)
-            jsonData.append(data)  
+            jsonData.append(data)
 
     elif name == 'graph':
         for query in Graph.objects.all():
@@ -42,9 +41,21 @@ def ajax_publish(request):
             data['url'] = query.url
             tag_names = map(lambda x: x.name, query.tag.all())
             data['tag'] = '|'.join(tag_names)
-            jsonData.append(data)
+            data['date'] = str(query.date)
+            jsonData.append(data)  
     
-    return HttpResponse(json.dumps(jsonData), content_type='application/json')
+    pack = {}
+    pack['version'] = getVersion(request)
+    pack['data'] = jsonData
+    return HttpResponse(json.dumps(pack), content_type='application/json')
+
+def getVersion(request):
+    app = str(request.GET.get('appname'))
+    # apps
+    for query in App.objects.all():
+        if query.name == app:
+            return query.version
+    return '1'
 
 def ajax_message(request):
     msg = str(request.GET.get('msg'))

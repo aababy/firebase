@@ -26,7 +26,7 @@ class TagAdmin(admin.ModelAdmin):
         return ' | '.join(app_names)
 
 class GraphAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display', 'tags')
+    list_display = ('name', 'display', 'tags', 'date')
     readonly_fields = ('display',)
     list_filter = ['tag']
     filter_horizontal=('tag',)
