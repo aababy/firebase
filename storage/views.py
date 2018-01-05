@@ -24,19 +24,27 @@ def ajax_publish(request):
                 data['version'] = '1'
                 jsonData.append(data)
                 break
-        return HttpResponse(json.dumps(jsonData), content_type='application/json')
 
     elif name == 'tag':
-        queryset = Tag.objects.all()
-        json_serializer = serializers.get_serializer("json")()
-        data = json_serializer.serialize(queryset, ensure_ascii=False)        
-        return HttpResponse(data, content_type="application/json")
+        for query in Tag.objects.all():
+            data = {}
+            data['name'] = query.name
+            data['display_name'] = query.display_name
+            data['image_order'] = query.image_order
+            app_names = map(lambda x: x.name, query.app.all())
+            data['app'] = '|'.join(app_names)
+            jsonData.append(data)  
 
     elif name == 'graph':
-        queryset = Graph.objects.all()
-        json_serializer = serializers.get_serializer("json")()
-        data = json_serializer.serialize(queryset, ensure_ascii=False)        
-        return HttpResponse(data, content_type="application/json")
+        for query in Graph.objects.all():
+            data = {}
+            data['name'] = query.name
+            data['url'] = query.url
+            tag_names = map(lambda x: x.name, query.tag.all())
+            data['tag'] = '|'.join(tag_names)
+            jsonData.append(data)
+    
+    return HttpResponse(json.dumps(jsonData), content_type='application/json')
 
 def ajax_message(request):
     msg = str(request.GET.get('msg'))

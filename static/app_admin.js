@@ -36,11 +36,26 @@
 
         function handlePublish(evt) {
             //publish app
+            // let app_name = document.getElementById('id_name').value
+            // $.get("/ajax/publish/", {'filename': 'app', 'appname': app_name}, function (ret) {
+            //     let id_name = document.getElementById('id_name').value
+            //     let json = JSON.stringify(ret)
+            //     storageRef.child('data/' + id_name + '/app').putString(json).then(function (snapshot) {
+            //         alert('publish succeed.');
+            //     }).catch(function (error) {
+            //         alert('publish failed.');
+            //     });
+            // })
+
+            publish('graph')
+        }
+
+        function publish(name) {
             let app_name = document.getElementById('id_name').value
-            $.get("/ajax/publish/", {'filename': 'app', 'appname': app_name}, function (ret) {
+            $.get("/ajax/publish/", {'filename': name, 'appname': app_name}, function (ret) {
                 let id_name = document.getElementById('id_name').value
                 let json = JSON.stringify(ret)
-                storageRef.child('app/' + id_name + '/app').putString(json).then(function (snapshot) {
+                storageRef.child('data/' + id_name + '/' + name + '.json').putString(json).then(function (snapshot) {
                     alert('publish succeed.');
                 }).catch(function (error) {
                     alert('publish failed.');
