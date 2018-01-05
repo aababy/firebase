@@ -14,12 +14,14 @@ class AppAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_filter = ['app']
     filter_horizontal=('app',)
+    search_fields = ['app__name']
 
 class GraphAdmin(admin.ModelAdmin):
     list_display = ('name', 'display')
     readonly_fields = ('display',)
     list_filter = ['tag']
     filter_horizontal=('tag',)
+    search_fields = ['tag__name']
 
     class Media:
         js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 
