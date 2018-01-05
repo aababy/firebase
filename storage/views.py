@@ -47,7 +47,7 @@ def ajax_publish(request):
     pack = {}
     pack['version'] = getVersion(request)
     pack['data'] = jsonData
-    return HttpResponse(json.dumps(pack), content_type='application/json')
+    return HttpResponse(json.dumps(pack, sort_keys=True), content_type='application/json')
 
 def getVersion(request):
     app = str(request.GET.get('appname'))
