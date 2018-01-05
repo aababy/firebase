@@ -35,6 +35,7 @@
         });
 
         function handlePublish(evt) {
+            document.getElementById('id_publish').disabled = true;
             publish('app')
         }
 
@@ -53,6 +54,7 @@
                     }
                 }).catch(function (error) {
                     alert('publish failed.')
+                    document.getElementById('id_publish').disabled = false;
                 });
             })
         }
