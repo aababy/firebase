@@ -26,38 +26,37 @@ class GraphAdmin(admin.ModelAdmin):
     list_filter = ['tag']
     filter_horizontal=('tag',)
     search_fields = ['tag__name']
-    actions = ['update_data_src']
+    actions = ['add_tags']
 
-    class data_src_form(forms.forms.Form):  
+    class add_tags_form(forms.forms.Form):  
         _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)  
         data_src = forms.ModelChoiceField(Tag.objects)
 
-    def update_data_src(modeladmin, request, queryset):
+    def add_tags(modeladmin, request, queryset):
         form = None
         if 'cancel' in request.POST:
-            modeladmin.message_user(request, u'已取消')
+            modeladmin.message_user(request, u'Action canceled.')
             return
         elif 'data_src' in request.POST:
-            form = modeladmin.data_src_form(request.POST)
+            form = modeladmin.add_tags_form(request.POST)
             if form.is_valid():
                 data_src = form.cleaned_data['data_src']
-                for case in queryset:
-                    case.tag.add(data_src)
-                    case.save()
-                modeladmin.message_user(
-                request, "%s successfully updated." % queryset.count())
+                for selected in queryset:
+                    selected.tag.add(data_src)
+                    selected.save()
+                modeladmin.message_user(request, "%s item(s) successfully updated." % queryset.count())
                 return HttpResponseRedirect(request.get_full_path())
             else:
-                messages.warning(request, u"请选择数据源")
+                messages.warning(request, u"Tags must be selected. ")
                 form = None
 
         if not form:  
-            form  = modeladmin.data_src_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
+            form  = modeladmin.add_tags_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
         return render_to_response('batch_update.html',  
-                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'update_data_src', 'title': u'批量修改数据源为'},  
+                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'add_tags', 'title': u'Add tags'},  
                                   context_instance=RequestContext(request))  
   
-    update_data_src.short_description = u'批量修改 数据源'  
+    add_tags.short_description = u'Add tags'  
 
     class Media:
         js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 
