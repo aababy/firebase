@@ -36,7 +36,7 @@
             $.get("/ajax/publish/", {}, function (ret) {
                 let json = JSON.stringify(ret)
                 storageRef.child('app/data').putString(json).then(function (snapshot) {
-                    alert('publish_succeed.');
+                    alert('publish succeed.');
                     // $.get("#/ajax/message/", { 'msg': 'publish_succeed.', 'path': window.location.pathname }, function (ret) { })
                 }).catch(function (error) {
                     alert('publish failed.');
