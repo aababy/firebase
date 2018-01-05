@@ -33,15 +33,13 @@
         });
 
         function handlePublish(evt) {
-            console.log('click');
-
             $.get("/ajax/publish/", {}, function (ret) {
                 let json = JSON.stringify(ret)
-                console.log('publish succeed.');
                 storageRef.child('app/data').putString(json).then(function (snapshot) {
-                    $.get("/ajax/publish/", { 'msg': 'publish_succeed.' }, function (ret) { })
+                    alert('publish_succeed.');
+                    // $.get("#/ajax/message/", { 'msg': 'publish_succeed.', 'path': window.location.pathname }, function (ret) { })
                 }).catch(function (error) {
-                    $.get("/ajax/publish/", { 'msg': 'publish failed.' }, function (ret) { })
+                    alert('publish failed.');
                 });
             })
         }

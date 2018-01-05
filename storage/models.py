@@ -15,6 +15,7 @@ class App(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)
+    display_name = models.CharField(max_length=200, default="")
     image_order = models.CharField(max_length=400, blank=True)
 
     app = models.ManyToManyField(App)   # app
