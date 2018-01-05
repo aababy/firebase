@@ -21,12 +21,16 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ['app__name']
 
 class GraphAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display')
+    list_display = ('name', 'display', 'tags')
     readonly_fields = ('display',)
     list_filter = ['tag']
     filter_horizontal=('tag',)
     search_fields = ['tag__name']
     actions = ['add_tags', 'delete_tags']
+
+    def tags(self, graph):
+        tag_names = map(lambda x: x.name, graph.tag.all())
+        return ' | '.join(tag_names)
 
     class tags_form(forms.forms.Form):  
         _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)  
