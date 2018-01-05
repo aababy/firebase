@@ -35,11 +35,13 @@
         });
 
         function handlePublish(evt) {
-            $.get("/ajax/publish/", {}, function (ret) {
+            //publish app
+            let app_name = document.getElementById('id_name').value
+            $.get("/ajax/publish/", {'filename': 'app', 'appname': app_name}, function (ret) {
+                let id_name = document.getElementById('id_name').value
                 let json = JSON.stringify(ret)
-                storageRef.child('app/data').putString(json).then(function (snapshot) {
+                storageRef.child('app/' + id_name + '/app').putString(json).then(function (snapshot) {
                     alert('publish succeed.');
-                    // $.get("/ajax/message/", { 'msg': 'publish_succeed.', 'path': window.location.pathname }, function (ret) { })
                 }).catch(function (error) {
                     alert('publish failed.');
                 });

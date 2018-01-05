@@ -27,8 +27,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     #ajax 的都要加到这里
-    url(r'^ajax/publish/', views.ajax_publish, name='ajax_publish'),
     url(r'^ajax/message/', views.ajax_message, name='ajax_message'),
+    url(r'^ajax/publish/', views.ajax_publish, name='ajax_publish'),
 ]
 
 if settings.DEBUG:
