@@ -31,3 +31,6 @@ class GraphAdmin(admin.ModelAdmin):
 admin.site.register(App, AppAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Graph, GraphAdmin)
+
+admin.site.site_title = 'Firebase Storage admin'
+admin.site.site_header = 'Firebase Storage'

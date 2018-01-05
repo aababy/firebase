@@ -37,10 +37,11 @@
 
             $.get("/ajax/publish/", {}, function (ret) {
                 let json = JSON.stringify(ret)
+                console.log('publish succeed.');
                 storageRef.child('app/data').putString(json).then(function (snapshot) {
-                    console.log('File available at', url);
+                    $.get("/ajax/publish/", { 'msg': 'publish_succeed.' }, function (ret) { })
                 }).catch(function (error) {
-                    console.error('Upload failed:', error);
+                    $.get("/ajax/publish/", { 'msg': 'publish failed.' }, function (ret) { })
                 });
             })
         }

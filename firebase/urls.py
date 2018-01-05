@@ -1,3 +1,5 @@
+#coding:utf-8
+
 """firebase URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -19,9 +21,14 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from firebase.settings import MEDIA_ROOT
+from storage import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    #ajax 的都要加到这里
+    url(r'^ajax/publish/', views.ajax_publish, name='ajax_publish'),
+    url(r'^ajax/message/', views.ajax_message, name='ajax_message'),
 ]
 
 if settings.DEBUG:
