@@ -28,6 +28,9 @@ class GraphAdmin(admin.ModelAdmin):
     search_fields = ['tag__name']
     actions = ['add_tags', 'delete_tags']
 
+    #list_per_page设置每页显示多少条记录，默认是100条
+    list_per_page = 20
+
     def tags(self, graph):
         tag_names = map(lambda x: x.name, graph.tag.all())
         return ' | '.join(tag_names)
