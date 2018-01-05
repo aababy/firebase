@@ -50,10 +50,10 @@
                     } else if (name == 'tag') {
                         publish('graph')
                     } else {
-                        alert('publish succeed.')
+                        alert('Publish succeed.')
                     }
                 }).catch(function (error) {
-                    alert('publish failed.')
+                    alert('Publish failed.')
                     document.getElementById('id_publish').disabled = false;
                 });
             })
