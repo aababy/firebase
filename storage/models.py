@@ -46,8 +46,11 @@ class Graph(models.Model):
         return self.name
 
 class Package(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, default="", blank=True)
     url = models.CharField(max_length=400, default="", blank=True)  # URL
+
+    thumb_name = models.CharField(max_length=200, default="", blank=True)
+    thumb_url = models.CharField(max_length=400, default="", blank=True)  # URL
 
     graph = models.ManyToManyField(Graph, blank=True)   # graph
 
