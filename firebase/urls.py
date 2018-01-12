@@ -24,6 +24,7 @@ from firebase.settings import MEDIA_ROOT
 from storage import views
 
 urlpatterns = [
+    url(r'', admin.site.urls),
     url(r'^admin/', admin.site.urls),
 
     #ajax 的都要加到这里
