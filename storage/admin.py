@@ -5,7 +5,7 @@ from django import forms
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from storage.models import App, Tag, Graph
+from storage.models import App, Tag, Graph, Package
 
 class AppAdmin(admin.ModelAdmin):
     class Media:
@@ -101,11 +101,19 @@ class GraphAdmin(admin.ModelAdmin):
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
         "/static/graph_admin.js")
 
+class PackageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'graphs', )
+    filter_horizontal=('graph',)
+
+    def graphs(self, package):
+        graph_names = map(lambda x: x.name, package.graph.all())
+        return ' | '.join(graph_names)
 
 
 admin.site.register(App, AppAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Graph, GraphAdmin)
+admin.site.register(Package, PackageAdmin)
 
 admin.site.site_title = 'Firebase Storage admin'
 admin.site.site_header = 'Firebase Storage'

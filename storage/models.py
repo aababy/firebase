@@ -44,3 +44,12 @@ class Graph(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class Package(models.Model):
+    name = models.CharField(max_length=200)
+    url = models.CharField(max_length=400, default="", blank=True)  # URL
+
+    graph = models.ManyToManyField(Graph, blank=True)   # graph
+
+    def __unicode__(self):
+        return self.name
