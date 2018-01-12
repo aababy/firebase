@@ -15,6 +15,9 @@ class App(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        unique_together = ["name",]
+
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     display_name = models.CharField(max_length=50, default="")
@@ -25,14 +28,8 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.name
 
-    # def save(self, *args, **kwargs):
-    #     repeat = False
-    #     for query in Tag.objects.all():
-    #         if query.name == self.name:
-    #             repeat = True
-
-    #     if repeat == False:
-    #         super(Tag, self).save(*args, **kwargs) # Call the "real" save() method.
+    class Meta:
+        unique_together = ["name",]
 
 class Graph(models.Model):
     name = models.CharField(max_length=200)                         # 姓名
