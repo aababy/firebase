@@ -25,6 +25,15 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.name
 
+    # def save(self, *args, **kwargs):
+    #     repeat = False
+    #     for query in Tag.objects.all():
+    #         if query.name == self.name:
+    #             repeat = True
+
+    #     if repeat == False:
+    #         super(Tag, self).save(*args, **kwargs) # Call the "real" save() method.
+
 class Graph(models.Model):
     name = models.CharField(max_length=200)                         # 姓名
     url = models.CharField(max_length=400, default="", blank=True)  # URL
