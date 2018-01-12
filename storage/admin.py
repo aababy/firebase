@@ -109,6 +109,13 @@ class PackageAdmin(admin.ModelAdmin):
         graph_names = map(lambda x: x.name, package.graph.all())
         return ' | '.join(graph_names)
 
+    class Media:
+        js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js', 
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js',
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
+        "/static/package_admin.js")
+
 
 admin.site.register(App, AppAdmin)
 admin.site.register(Tag, TagAdmin)
