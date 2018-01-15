@@ -7,12 +7,12 @@
 
         //初始化
         var config = {
-            apiKey: "AIzaSyBvcx_zTTFWyOlkE8x1y1_I1bSl3zaFkrA",
-            authDomain: "hidd-bigb001.firebaseapp.com",
-            databaseURL: "https://hidd-bigb001.firebaseio.com",
-            projectId: "hidd-bigb001",
-            storageBucket: "hidd-bigb001.appspot.com",
-            messagingSenderId: "278231656471"
+            apiKey: "AIzaSyAaKztuNaOumx941AHhWf11SCgXZMuAxyY",
+            authDomain: "tobi-apps.firebaseapp.com",
+            databaseURL: "https://tobi-apps.firebaseio.com",
+            projectId: "tobi-apps",
+            storageBucket: "tobi-apps.appspot.com",
+            messagingSenderId: "405572885328"
         };
         firebase.initializeApp(config);
 
