@@ -45,6 +45,9 @@ class Graph(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        unique_together = ["name",]
+
 class Package(models.Model):
     name = models.CharField(max_length=200, default="", blank=True)
     url = models.CharField(max_length=400, default="", blank=True)  # URL
