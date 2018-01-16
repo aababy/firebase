@@ -24,6 +24,7 @@ class Tag(models.Model):
     image_order = models.CharField(max_length=400, blank=True)
 
     app = models.ManyToManyField(App)   # app
+    cover = models.OneToOneField("Graph", related_name='cover')
 
     def __unicode__(self):
         return self.name
