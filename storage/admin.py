@@ -5,7 +5,7 @@ from django import forms
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from storage.models import App, Tag, Graph, Package
+from storage.models import App, Tag, Graph, Package, Feature
 
 class AppAdmin(admin.ModelAdmin):
     class Media:
@@ -18,7 +18,7 @@ class AppAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'display_name', 'apps')
     list_filter = ['app']
-    filter_horizontal=('app',)
+    filter_horizontal = ('app',)
     search_fields = ['app__name']
 
     def apps(self, tag):
@@ -116,11 +116,22 @@ class PackageAdmin(admin.ModelAdmin):
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
         "/static/package_admin.js")
 
+class FeatureAdmin(admin.ModelAdmin):
+    list_display = ('name', 'display', )
+    readonly_fields = ('display',)
+
+    class Media:
+        js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js', 
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js',
+        'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
+        "/static/feature_admin.js")
 
 admin.site.register(App, AppAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Graph, GraphAdmin)
 admin.site.register(Package, PackageAdmin)
+admin.site.register(Feature, FeatureAdmin)
 
 admin.site.site_title = 'Firebase Storage admin'
 admin.site.site_header = 'Firebase Storage'

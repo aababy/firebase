@@ -24,7 +24,8 @@ class Tag(models.Model):
     image_order = models.CharField(max_length=400, blank=True)
 
     app = models.ManyToManyField(App)   # app
-    cover = models.OneToOneField("Graph", related_name='cover')
+    # cover = models.OneToOneField("Graph", related_name='cover')
+    cover = models.ForeignKey("Graph", related_name='cover', default="", blank=True)
 
     def __unicode__(self):
         return self.name
@@ -57,6 +58,17 @@ class Package(models.Model):
     thumb_url = models.CharField(max_length=400, default="", blank=True)  # URL
 
     graph = models.ManyToManyField(Graph, blank=True)   # graph
+
+    def __unicode__(self):
+        return self.name
+
+class Feature(models.Model):
+    name = models.CharField(max_length=200, default="", blank=True)
+    url = models.CharField(max_length=400, default="", blank=True) # URL
+
+    def display(self):
+        return mark_safe(u'<img src="%s" width="120px" />' % self.url)
+    display.short_description = u'graph'
 
     def __unicode__(self):
         return self.name
