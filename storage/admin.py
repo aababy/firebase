@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from storage.models import App, Tag, Graph, Package, Feature
+from storage.forms import TagForm
 
 class AppAdmin(admin.ModelAdmin):
     class Media:
@@ -128,7 +129,7 @@ class FeatureAdmin(admin.ModelAdmin):
         "/static/feature_admin.js")
 
 admin.site.register(App, AppAdmin)
-admin.site.register(Tag, TagAdmin)
+admin.site.register(Tag, TagAdmin, form = TagForm)
 admin.site.register(Graph, GraphAdmin)
 admin.site.register(Package, PackageAdmin)
 admin.site.register(Feature, FeatureAdmin)
