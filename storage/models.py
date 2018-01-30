@@ -41,8 +41,9 @@ class Graph(models.Model):
     def display(self):
         return mark_safe(u'<img src="%s" width="120px" />' % self.url)
     display.short_description = u'graph'
-
+    
     tag = models.ManyToManyField(Tag, blank=True)   # tag
+    subscription = models.BooleanField(default=False) #订阅
 
     def __unicode__(self):
         return self.name
