@@ -1,0 +1,16 @@
+{% extends "admin/base_site.html" %} {% block content %}
+<form method="post" action="{{ path }}">
+    {% csrf_token %}
+    <p>
+        <input type="hidden" name="action" value="{{ action }}" />
+        <input type="submit" name="remove" value="Remove" />
+        <input type="submit" name="add" value="Add" />
+    </p>
+</form>
+<p>Apply all the following graphs:</p>
+<ul>
+    {% for obj in objs %}
+    <li>{{ obj }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
