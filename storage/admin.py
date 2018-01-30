@@ -27,12 +27,12 @@ class TagAdmin(admin.ModelAdmin):
         return ' | '.join(app_names)
 
 class GraphAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display', 'tags', 'date')
+    list_display = ('name', 'display', 'tags', 'subscription', 'date')
     readonly_fields = ('display',)
     list_filter = ['tag']
     filter_horizontal=('tag',)
     search_fields = ['tag__name']
-    actions = ['add_tags', 'delete_tags']
+    actions = ['add_tags', 'delete_tags', 'modify_subscription']
 
     #list_per_page设置每页显示多少条记录，默认是100条
     list_per_page = 20
@@ -94,6 +94,27 @@ class GraphAdmin(admin.ModelAdmin):
                                   {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'delete_tags', 'title': u'Delete tags'},  
                                   context_instance=RequestContext(request))
     delete_tags.short_description = u'Delete tags'
+
+    def modify_subscription(modeladmin, request, queryset):
+        form = None
+        if 'cancel' in request.POST:
+            for selected in queryset:
+                selected.subscription = False
+                selected.save()
+            modeladmin.message_user(request, "%s item(s) successfully remove subscription." % queryset.count())
+            return HttpResponseRedirect(request.get_full_path())
+        elif 'data_src' in request.POST:
+            for selected in queryset:
+                selected.subscription = True
+                selected.save()
+            modeladmin.message_user(request, "%s item(s) successfully add subscription." % queryset.count())
+            return HttpResponseRedirect(request.get_full_path())
+
+        form  = modeladmin.tags_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
+        return render_to_response('batch_update.html',  
+                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'modify_subscription', 'title': u'Modify subscription'},  
+                                  context_instance=RequestContext(request))
+    modify_subscription.short_description = u'Modify subscription'
 
     class Media:
         js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 
