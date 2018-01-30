@@ -31,9 +31,9 @@ class Migration(migrations.Migration):
             name='date',
             field=models.DateTimeField(default=datetime.datetime(2018, 1, 29, 8, 11, 14, 840159, tzinfo=utc), verbose_name='upload date'),
         ),
-        migrations.AlterField(
-            model_name='tag',
-            name='cover',
-            field=models.CharField(blank=True, default='', max_length=200),
-        ),
+        # migrations.AlterField(
+        #     model_name='tag',
+        #     name='cover',
+        #     field=models.CharField(blank=True, default='', max_length=200),
+        # ),
     ]

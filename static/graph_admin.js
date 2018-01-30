@@ -46,6 +46,12 @@
                 var url = snapshot.downloadURL;
                 let dot = file.name.indexOf('.');
                 let name = file.name.slice(0, dot);
+
+                let thumb = name.indexOf('_thumb');                 //fix thumb name
+                if (thumb != -1) {
+                    name = name.slice(0, thumb);
+                }
+                
                 document.getElementById('id_name').value = name;
                 document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
             }).catch(function (error) {

@@ -20,9 +20,9 @@ class Migration(migrations.Migration):
             name='date',
             field=models.DateTimeField(default=datetime.datetime(2018, 1, 29, 8, 29, 16, 881828, tzinfo=utc), verbose_name='upload date'),
         ),
-        migrations.AlterField(
-            model_name='tag',
-            name='cover',
-            field=models.ForeignKey(blank=True, default='', on_delete=django.db.models.deletion.CASCADE, related_name='cover', to='storage.Graph'),
-        ),
+        # migrations.AlterField(
+        #     model_name='tag',
+        #     name='cover',
+        #     field=models.ForeignKey(blank=True, default='', on_delete=django.db.models.deletion.CASCADE, related_name='cover', to='storage.Graph'),
+        # ),
     ]

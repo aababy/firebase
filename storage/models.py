@@ -25,7 +25,7 @@ class Tag(models.Model):
 
     app = models.ManyToManyField(App)   # app
     # cover = models.OneToOneField("Graph", related_name='cover')
-    cover = models.ForeignKey("Graph", related_name='cover', default="", blank=True)
+    cover = models.ForeignKey("Graph", related_name='cover', default="", blank=True, null=True)
 
     def __unicode__(self):
         return self.name

@@ -15,12 +15,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='tag',
-            name='cover',
-            field=models.OneToOneField(default='', on_delete=django.db.models.deletion.CASCADE, related_name='cover', to='storage.Graph'),
-            preserve_default=False,
-        ),
+        # migrations.AddField(
+        #     model_name='tag',
+        #     name='cover',
+        #     field=models.OneToOneField(default='', on_delete=django.db.models.deletion.CASCADE, related_name='cover', to='storage.Graph'),
+        #     preserve_default=False,
+        # ),
         migrations.AlterField(
             model_name='graph',
             name='date',
