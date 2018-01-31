@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from storage.models import App, Tag, Graph
+from storage.models import App, Tag, Graph, Package
 from django.contrib import messages
 from django.http import HttpResponseRedirect 
 from django.shortcuts import render_to_response
@@ -32,7 +32,7 @@ def ajax_publish(request):
             data['image_order'] = query.image_order
             app_names = map(lambda x: x.name, query.app.all())
             data['app'] = '|'.join(app_names)
-            data['cover'] = query.cover
+            data['cover'] = str(query.cover)
             jsonData.append(data)
 
     elif name == 'graph':
@@ -43,7 +43,16 @@ def ajax_publish(request):
             data['tag'] = '|'.join(tag_names)
             data['date'] = str(query.date)
             data['subscription'] = query.subscription
-            jsonData.append(data)  
+            jsonData.append(data)
+
+    elif name == 'package':
+        for query in Package.objects.all():
+            data = {}
+            data['name'] = query.name
+            data['thumb_name'] = query.thumb_name
+            graph_names = map(lambda x: x.name, query.graph.all())
+            data['graph'] = '|'.join(graph_names)
+            jsonData.append(data)         
     
     pack = {}
     pack['version'] = getVersion(request)

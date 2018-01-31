@@ -49,6 +49,8 @@
                         publish('tag')
                     } else if (name == 'tag') {
                         publish('graph')
+                    } else if (name == 'graph') {
+                        publish('package')
                     } else {
                         alert('Publish succeed.')
                     }
