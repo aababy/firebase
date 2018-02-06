@@ -22,6 +22,7 @@ def ajax_publish(request):
                 data['name'] = query.name
                 data['tag_order'] = query.tag_order
                 data['version'] = query.version
+                data['force_update_version'] = query.force_update_version
                 return HttpResponse(json.dumps(data), content_type='application/json')
 
     elif name == 'tag':
@@ -29,14 +30,13 @@ def ajax_publish(request):
             data = {}
             data['name'] = query.name
             data['display_name'] = query.display_name
-            data['image_order'] = query.image_order
             app_names = map(lambda x: x.name, query.app.all())
             data['app'] = '|'.join(app_names)
             data['cover'] = str(query.cover)
             jsonData.append(data)
 
     elif name == 'graph':
-        for query in Graph.objects.all():
+        for query in Graph.objects.order_by("-date"):
             data = {}
             data['name'] = query.name
             tag_names = map(lambda x: x.name, query.tag.all())

@@ -10,7 +10,8 @@ from django.utils import timezone
 class App(models.Model):
     name = models.CharField(max_length=50)
     tag_order = models.CharField(max_length=200, default="", blank=True)
-    version = models.CharField(max_length=10, default="1")
+    version = models.IntegerField(default=1)
+    force_update_version = models.IntegerField(default=1)
 
     def __unicode__(self):
         return self.name
@@ -21,7 +22,6 @@ class App(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     display_name = models.CharField(max_length=50, default="")
-    image_order = models.CharField(max_length=400, blank=True)
 
     app = models.ManyToManyField(App)   # app
     # cover = models.OneToOneField("Graph", related_name='cover')
