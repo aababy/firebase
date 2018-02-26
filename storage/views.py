@@ -52,6 +52,8 @@ def ajax_publish(request):
             data['thumb_name'] = query.thumb_name
             graph_names = map(lambda x: x.name, query.graph.all())
             data['graph'] = '|'.join(graph_names)
+            app_names = map(lambda x: x.name, query.app.all())
+            data['app'] = '|'.join(app_names)
             jsonData.append(data)         
     
     pack = {}
