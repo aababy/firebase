@@ -124,12 +124,16 @@ class GraphAdmin(admin.ModelAdmin):
         "/static/graph_admin.js")
 
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'graphs', )
-    filter_horizontal=('graph',)
+    list_display = ('name', 'graphs', 'apps', )
+    filter_horizontal=('graph', 'app', )
 
     def graphs(self, package):
         graph_names = map(lambda x: x.name, package.graph.all())
         return ' | '.join(graph_names)
+
+    def apps(self, package):
+        app_names = map(lambda x: x.name, package.app.all())
+        return ' | '.join(app_names)
 
     class Media:
         js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 

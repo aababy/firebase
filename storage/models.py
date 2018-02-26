@@ -59,6 +59,7 @@ class Package(models.Model):
     thumb_url = models.CharField(max_length=400, default="", blank=True)  # URL
 
     graph = models.ManyToManyField(Graph, blank=True)   # graph
+    app = models.ManyToManyField(App, blank=True)   # app
 
     def __unicode__(self):
         return self.name
