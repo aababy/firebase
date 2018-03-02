@@ -159,5 +159,5 @@ admin.site.register(Graph, GraphAdmin)
 admin.site.register(Package, PackageAdmin)
 admin.site.register(Feature, FeatureAdmin)
 
-admin.site.site_title = 'Firebase Storage admin'
-admin.site.site_header = 'Firebase Storage'
+admin.site.site_title = 'Jigsaw admin'
+admin.site.site_header = 'Jigsaw'
