@@ -43,6 +43,10 @@ def ajax_publish(request):
             data['tag'] = '|'.join(tag_names)
             data['date'] = str(query.date)
             data['subscription'] = query.subscription
+            if query.original_url != "":
+                data['original'] = True
+            else:
+                data['original'] = False
             jsonData.append(data)
 
     elif name == 'package':

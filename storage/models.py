@@ -34,9 +34,10 @@ class Tag(models.Model):
         unique_together = ["name",]
 
 class Graph(models.Model):
-    name = models.CharField(max_length=200)                         # 姓名
-    url = models.CharField(max_length=400, default="", blank=True)  # URL
-    date = models.DateTimeField('upload date', default=timezone.now())
+    name = models.CharField(max_length=200)                                     # 姓名
+    url = models.CharField(max_length=400, default="", blank=True)              # URL
+    original_url = models.CharField(max_length=400, default="", blank=True)     # URL
+    date = models.DateTimeField('upload date', default=timezone.now)
 
     def display(self):
         return mark_safe(u'<img src="%s" width="120px" />' % self.url)
