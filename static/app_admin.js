@@ -37,6 +37,9 @@
         function handlePublish(evt) {
             document.getElementById('id_publish').disabled = true;
             publish('app')
+
+            let value = parseInt(document.getElementById('id_version').value);
+            document.getElementById('id_version').value = value + 1;
         }
 
         function publish(name) {
@@ -45,7 +48,7 @@
                 let id_name = document.getElementById('id_name').value
                 let json = JSON.stringify(ret)
                 storageRef.child('data/' + id_name + '/' + name + '.json').putString(json).then(function (snapshot) {
-                    if (name == 'app') {
+                    if (name == 'app') {                        
                         publish('tag')
                     } else if (name == 'tag') {
                         publish('graph')

@@ -18,6 +18,9 @@ def ajax_publish(request):
         # apps
         for query in App.objects.all():
             if query.name == app:
+                query.version += 1
+                query.save()
+
                 data = {}
                 data['name'] = query.name
                 data['tag_order'] = query.tag_order
