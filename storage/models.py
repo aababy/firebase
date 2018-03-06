@@ -44,7 +44,7 @@ class Graph(models.Model):
     display.short_description = u'graph'
     
     tag = models.ManyToManyField(Tag, blank=True)   # tag
-    subscription = models.BooleanField(default=False) #订阅
+    subscription = models.BooleanField(default=True) #订阅
 
     def __unicode__(self):
         return self.name
