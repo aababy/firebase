@@ -143,7 +143,7 @@ class PackageAdmin(admin.ModelAdmin):
         "/static/package_admin.js")
 
 class FeatureAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display', )
+    list_display = ('name', 'display', 'order')
     readonly_fields = ('display',)
 
     class Media:

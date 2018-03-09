@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from storage.models import App, Tag, Graph, Package
+from storage.models import App, Tag, Graph, Package, Feature
 from django.contrib import messages
 from django.http import HttpResponseRedirect 
 from django.shortcuts import render_to_response
@@ -61,7 +61,14 @@ def ajax_publish(request):
             data['graph'] = '|'.join(graph_names)
             app_names = map(lambda x: x.name, query.app.all())
             data['app'] = '|'.join(app_names)
-            jsonData.append(data)         
+            jsonData.append(data)      
+
+    elif name == 'feature':
+        for query in Feature.objects.all():
+            data = {}
+            data['name'] = query.name
+            data['order'] = query.order
+            jsonData.append(data)               
     
     pack = {}
     pack['version'] = getVersion(request)

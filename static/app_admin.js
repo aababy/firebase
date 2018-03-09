@@ -54,6 +54,8 @@
                         publish('graph')
                     } else if (name == 'graph') {
                         publish('package')
+                    } else if (name == 'package') {
+                        publish('feature')
                     } else {
                         alert('Publish succeed.')
                     }

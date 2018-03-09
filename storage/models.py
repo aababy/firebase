@@ -68,6 +68,7 @@ class Package(models.Model):
 class Feature(models.Model):
     name = models.CharField(max_length=200, default="", blank=True)
     url = models.CharField(max_length=400, default="", blank=True) # URL
+    order = models.IntegerField(default=1)
 
     def display(self):
         return mark_safe(u'<img src="%s" width="120px" />' % self.url)
