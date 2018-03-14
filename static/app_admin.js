@@ -19,6 +19,7 @@
         var auth = firebase.auth();
         var storageRef = firebase.storage().ref();
 
+        $.ajaxSetup ({ cache: false });
         $('#id_name').after('<input type="button" id="id_publish" class="button" name="publish" value="Publish"></input>') //插入按钮
         $('#id_publish').css("marginLeft", "8px")
         $('#id_publish').click(handlePublish);
