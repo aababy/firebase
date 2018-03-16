@@ -69,6 +69,7 @@ class Feature(models.Model):
     name = models.CharField(max_length=200, default="", blank=True)
     url = models.CharField(max_length=400, default="", blank=True) # URL
     order = models.IntegerField(default=1)
+    click = models.ForeignKey(Tag, blank=True, null=True)
 
     def display(self):
         return mark_safe(u'<img src="%s" width="120px" />' % self.url)

@@ -19,10 +19,13 @@ PROJECT_DIR = "/var/project/jigsaw/"  # project dir on server
 
 
 def staging():
-    env.user = "develop"
-    env.hosts = ["216.12.198.100"]
-    # env.key_filename =r'D:\home\myopenssh'
-
+    global PROJECT_NAME
+    global PROJECT_DIR
+    
+    PROJECT_NAME='jigsaw_test'
+    PROJECT_DIR = "/var/project/jigsaw_test/"
+    env.user = "jigsaw"
+    env.hosts = ["10.0.2.251"]
 
 def prod():
     env.user = "jigsaw"
