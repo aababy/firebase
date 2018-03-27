@@ -41,7 +41,9 @@
             var metadata = {
                 'contentType': file.type
             };
-
+            
+            document.getElementById('id_name').value = "";
+            document.getElementById('id_url').value = "";
             storageRef.child('features/' + file.name).put(file, metadata).then(function (snapshot) {
                 var url = snapshot.downloadURL;
                 let dot = file.name.indexOf('.');
