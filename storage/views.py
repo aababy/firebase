@@ -8,8 +8,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import json
+import logging
 
 def ajax_publish(request):
+    mylog = logging.getLogger('django')
+    mylog.debug('something is wrong')
+    return
+
     name = str(request.GET.get('filename'))
 
     jsonData = []
