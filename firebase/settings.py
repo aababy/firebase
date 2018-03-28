@@ -135,7 +135,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/tmp/debug.log',
+            'filename': '/tmp/jigsaw.log',
         },
     },
     'loggers': {
