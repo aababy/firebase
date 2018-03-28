@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 
 import os
 import uwsgi
-# 将具体的cron job分到另一个文件中写，便于维护
 from cron_job import *
 
 from django.core.wsgi import get_wsgi_application
