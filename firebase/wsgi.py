@@ -11,7 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 import uwsgi
-from cron_job import *
+from firebase.cron_job import *
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "firebase.settings")
 
