@@ -53,7 +53,7 @@ def ajax_publish(request):
             jsonData.append(data)
 
     elif name == 'package':
-        for query in Package.objects.all():
+        for query in Package.objects.order_by("name"):
             data = {}
             data['name'] = query.name
             data['thumb_name'] = query.thumb_name
