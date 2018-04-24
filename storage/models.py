@@ -41,7 +41,7 @@ class Graph(models.Model):
     date = models.DateTimeField('upload date', default=timezone.now)
 
     def display(self):
-        return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.GRAPH_PATH, self.name, settings.END_PATH))
+        return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.GRAPH_PATH, self.name, settings.GRAPH_END))
     display.short_description = u'graph'
     
     tag = models.ManyToManyField(Tag, blank=True)   # tag
@@ -73,7 +73,7 @@ class Feature(models.Model):
     click = models.ForeignKey(Tag, blank=True, null=True)
 
     def display(self):
-        return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.FEATURE_PATH, self.name, settings.END_PATH))
+        return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.FEATURE_PATH, self.name, settings.FEATURE_END))
     display.short_description = u'graph'
 
     def __unicode__(self):

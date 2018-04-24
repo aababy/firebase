@@ -48,7 +48,7 @@
                 'contentType': file.type
             };
 
-            storageRef.child('packages/' + file.name).put(file, metadata).then(function (snapshot) {
+            storageRef.child('jigsaw/packages/' + file.name).put(file, metadata).then(function (snapshot) {
                 var url = snapshot.downloadURL;
                 document.getElementById('id_name').value = file.name;
                 document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
@@ -66,7 +66,7 @@
                 'contentType': file.type
             };
 
-            storageRef.child('packages/' + file.name).put(file, metadata).then(function (snapshot) {
+            storageRef.child('jigsaw/packages/' + file.name).put(file, metadata).then(function (snapshot) {
                 var url = snapshot.downloadURL;
                 document.getElementById('id_thumb_name').value = file.name;
                 document.getElementById('id_thumb_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;

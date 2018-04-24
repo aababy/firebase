@@ -48,7 +48,7 @@
             $.get("/ajax/publish/", {'filename': name, 'appname': app_name}, function (ret) {
                 let id_name = document.getElementById('id_name').value
                 let json = JSON.stringify(ret)
-                storageRef.child('data/' + id_name + '/' + name + '.json').putString(json).then(function (snapshot) {
+                storageRef.child('jigsaw/data/' + id_name + '/' + name + '.json').putString(json).then(function (snapshot) {
                     if (name == 'app') {                        
                         publish('tag')
                     } else if (name == 'tag') {

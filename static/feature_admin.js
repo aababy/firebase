@@ -44,7 +44,7 @@
             
             document.getElementById('id_name').value = "";
             document.getElementById('id_url').value = "";
-            storageRef.child('features/' + file.name).put(file, metadata).then(function (snapshot) {
+            storageRef.child('jigsaw/features/' + file.name).put(file, metadata).then(function (snapshot) {
                 var url = snapshot.downloadURL;
                 let dot = file.name.indexOf('.');
                 let name = file.name.slice(0, dot);
