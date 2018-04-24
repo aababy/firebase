@@ -146,3 +146,6 @@ LOGGING = {
         },
     },
 }
+
+FIREBASE_PATH1 = 'https://firebasestorage.googleapis.com/v0/b/tobi-apps.appspot.com/o/graphs%2F'
+FIREBASE_PATH2 = '.jpg?alt=media'

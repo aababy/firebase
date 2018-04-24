@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils import timezone
+from firebase import settings
 
 class App(models.Model):
     name = models.CharField(max_length=50)
@@ -40,7 +41,7 @@ class Graph(models.Model):
     date = models.DateTimeField('upload date', default=timezone.now)
 
     def display(self):
-        return mark_safe(u'<img src="%s" width="120px" />' % self.url)
+        return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.FIREBASE_PATH1, self.name, settings.FIREBASE_PATH2))
     display.short_description = u'graph'
     
     tag = models.ManyToManyField(Tag, blank=True)   # tag
