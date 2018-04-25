@@ -5,15 +5,6 @@
             return;
         }
 
-        //初始化
-        var config = {
-            apiKey: "AIzaSyAaKztuNaOumx941AHhWf11SCgXZMuAxyY",
-            authDomain: "tobi-apps.firebaseapp.com",
-            databaseURL: "https://tobi-apps.firebaseio.com",
-            projectId: "tobi-apps",
-            storageBucket: "tobi-apps.appspot.com",
-            messagingSenderId: "405572885328"
-        };
         firebase.initializeApp(config);
 
         var auth = firebase.auth();

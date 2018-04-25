@@ -14,6 +14,7 @@ class AppAdmin(admin.ModelAdmin):
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js', 
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js',
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
+        "/static/firebase-jigsaw.js",
         "/static/app_admin.js")
 
 class TagAdmin(admin.ModelAdmin):
@@ -121,6 +122,7 @@ class GraphAdmin(admin.ModelAdmin):
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js', 
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js',
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
+        "/static/firebase-jigsaw.js",
         "/static/graph_admin.js")
 
 class PackageAdmin(admin.ModelAdmin):
@@ -140,6 +142,7 @@ class PackageAdmin(admin.ModelAdmin):
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js', 
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js',
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
+        "/static/firebase-jigsaw.js",
         "/static/package_admin.js")
 
 class FeatureAdmin(admin.ModelAdmin):
@@ -151,6 +154,7 @@ class FeatureAdmin(admin.ModelAdmin):
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js', 
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js',
         'https://www.gstatic.com/firebasejs/4.2.0/firebase-storage.js',
+        "/static/firebase-jigsaw.js",
         "/static/feature_admin.js")
 
 admin.site.register(App, AppAdmin)
