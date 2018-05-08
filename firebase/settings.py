@@ -147,7 +147,7 @@ LOGGING = {
     },
 }
 
-GRAPH_PATH = 'https://firebasestorage.googleapis.com/v0/b/big-bear-entertainment.appspot.com/o/jigsaw%2Fgraphs%2F'
+GRAPH_PATH = 'https://firebasestorage.googleapis.com/v0/b/test-project-33489.appspot.com/o/jigsaw%2Fgraphs%2F'
 GRAPH_END = '_thumb.jpg?alt=media'
-FEATURE_PATH = 'https://firebasestorage.googleapis.com/v0/b/big-bear-entertainment.appspot.com/o/jigsaw%2Ffeatures%2F'
+FEATURE_PATH = 'https://firebasestorage.googleapis.com/v0/b/test-project-33489.appspot.com/o/jigsaw%2Ffeatures%2F'
 FEATURE_END = '.jpg?alt=media'
