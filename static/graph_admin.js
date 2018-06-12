@@ -39,6 +39,12 @@
                 'contentType': file.type
             };
 
+            let dot = file.name.indexOf('.jpg');
+            if (dot == -1) {
+                alert('Your file name is wrong, it\'s suffix should be jpg!');
+                return;
+            }
+
             storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
                 var url = snapshot.downloadURL;
                 let dot = file.name.indexOf('.');
@@ -64,6 +70,12 @@
             var metadata = {
                 'contentType': file.type
             };
+
+            let dot = file.name.indexOf('.jpg');
+            if (dot == -1) {
+                alert('Your file name is wrong, it\'s suffix should be jpg!');
+                return;
+            }
 
             storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
                 var url = snapshot.downloadURL;
