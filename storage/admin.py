@@ -28,12 +28,12 @@ class TagAdmin(admin.ModelAdmin):
         return ' | '.join(app_names)
 
 class GraphAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display', 'tags', 'subscription', 'date')
+    list_display = ('name', 'display', 'tags', 'starting', 'subscription', 'date')
     readonly_fields = ('display',)
     list_filter = ['tag']
     filter_horizontal=('tag',)
-    search_fields = ['tag__name']
-    actions = ['add_tags', 'delete_tags', 'modify_subscription']
+    search_fields = ['name', 'tag__name']
+    actions = ['add_tags', 'delete_tags', 'modify_subscription', 'modify_starting']
 
     #list_per_page设置每页显示多少条记录，默认是100条
     list_per_page = 20
@@ -116,6 +116,27 @@ class GraphAdmin(admin.ModelAdmin):
                                   {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'modify_subscription', 'title': u'Modify subscription'},  
                                   context_instance=RequestContext(request))
     modify_subscription.short_description = u'Modify subscription'
+
+    def modify_starting(modeladmin, request, queryset):
+        form = None
+        if 'cancel' in request.POST:
+            for selected in queryset:
+                selected.starting = False
+                selected.save()
+            modeladmin.message_user(request, "%s item(s) successfully turn off starting." % queryset.count())
+            return HttpResponseRedirect(request.get_full_path())
+        elif 'data_src' in request.POST:
+            for selected in queryset:
+                selected.starting = True
+                selected.save()
+            modeladmin.message_user(request, "%s item(s) successfully turn on starting." % queryset.count())
+            return HttpResponseRedirect(request.get_full_path())
+
+        form  = modeladmin.tags_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
+        return render_to_response('batch_update.html',  
+                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'modify_starting', 'title': u'Modify starting'},  
+                                  context_instance=RequestContext(request))
+    modify_starting.short_description = u'Modify starting'
 
     class Media:
         js=("https://www.gstatic.com/firebasejs/4.2.0/firebase.js", 
