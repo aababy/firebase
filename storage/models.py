@@ -36,8 +36,8 @@ class Tag(models.Model):
 
 class Graph(models.Model):
     name = models.CharField(max_length=200)                                     # 姓名
-    url = models.CharField(max_length=400, default="", blank=True)              # URL
-    original_url = models.CharField(max_length=400, default="", blank=True)     # URL
+    url = models.CharField(max_length=400, default="")                          # URL
+    original_url = models.CharField(max_length=400, default="")                 # URL
     date = models.DateTimeField('upload date', default=timezone.now)
 
     def display(self):
