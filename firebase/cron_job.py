@@ -16,7 +16,7 @@ def cron_print_hello(signum):
 
 jobs = [{"name": cron_print_time,
          # minute, hour, day, month, weekday, "-1" means "all"，此例为每个周一的17：00
-         "time": [0, 17, -1, -1, -1],
+         "time": [0, 2, -1, -1, -1],
          },
         # {"name": cron_print_hello,
         #  "time": [5],  # 每隔2秒
