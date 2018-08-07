@@ -17,6 +17,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "firebase.settings")
 application = get_wsgi_application()
 
 for job_id, job in enumerate(jobs):
+
+    print 'xxxx'
+
     uwsgi.register_signal(job_id, "", job['name'])
     if len(job['time']) == 1:
         uwsgi.add_timer(job_id, job['time'][0])
