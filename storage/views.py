@@ -87,3 +87,12 @@ def ajax_message(request):
 
     return render_to_response('messages.html', locals(), context_instance = RequestContext(request)) 
     # return HttpResponseRedirect(path)
+
+def ajax_get_graphs(request):
+    jsonData = []
+    for query in Graph.objects.all():
+        data = {}
+        data['name'] = query.name
+        jsonData.append(data)
+
+    return HttpResponse(json.dumps(jsonData, sort_keys=True), content_type='application/json')

@@ -1,8 +1,13 @@
 (function ($) {
     window.onload = function () {
         //如果不是编辑界面，那么就不执行下面的操作
-        if (window.location.pathname == '/admin/storage/graph/') {
+        if (window.location.pathname == '/storage/graph/') {
             return;
+        } else {
+            var graphs = null;
+            $.get("/ajax/get_graphs/", {}, function (ret) {
+                graphs = ret;
+            })
         }
 
         firebase.initializeApp(config);
@@ -39,28 +44,33 @@
                 'contentType': file.type
             };
 
-            let dot = file.name.indexOf('.jpg');
+            let dot = file.name.indexOf('_thumb.jpg');
             if (dot == -1) {
-                alert('Your file name is wrong, it\'s suffix should be jpg!');
+                alert('Your file name is wrong, it\'s suffix should be _thumb.jpg!');
                 return;
             }
 
-            storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
-                var url = snapshot.downloadURL;
-                let dot = file.name.indexOf('.');
-                let name = file.name.slice(0, dot);
-
-                let thumb = name.indexOf('_thumb');                 //fix thumb name
-                if (thumb != -1) {
-                    name = name.slice(0, thumb);
-                }
-                
-                document.getElementById('id_name').value = name;
-                document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
-            }).catch(function (error) {
-                console.error('Upload failed:', error);
-                alert('Upload failed.')
-            });
+            //检查是否跟已有的graph重名
+            if(checkFileName(file.name.slice(0, dot))) {
+                storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
+                    var url = snapshot.downloadURL;
+                    let dot = file.name.indexOf('.');
+                    let name = file.name.slice(0, dot);
+    
+                    let thumb = name.indexOf('_thumb');                 //fix thumb name
+                    if (thumb != -1) {
+                        name = name.slice(0, thumb);
+                    }
+                    
+                    document.getElementById('id_name').value = name;
+                    document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
+                }).catch(function (error) {
+                    console.error('Upload failed:', error);
+                    alert('Upload failed.')
+                });
+            } else {
+                alert('Your file name is repeated with others!')
+            }
         }
 
         function handleFileSelectOriginal(evt) {
@@ -77,13 +87,28 @@
                 return;
             }
 
-            storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
-                var url = snapshot.downloadURL;
-                document.getElementById('id_original_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
-            }).catch(function (error) {
-                console.error('Upload failed:', error);
-                alert('Upload failed.')
-            });
+            //检查是否跟已有的graph重名
+            if(checkFileName(file.name.slice(0, dot))) {
+                storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
+                    var url = snapshot.downloadURL;
+                    document.getElementById('id_original_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
+                }).catch(function (error) {
+                    console.error('Upload failed:', error);
+                    alert('Upload failed.')
+                });
+            } else {
+                alert('Your file name is repeated with others!')
+            }
+        }
+
+        function checkFileName(name) {
+            for (let index = 0; index < graphs.length; index++) {
+                const graph = graphs[index];
+                if (graph.name == name) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 })(django.jQuery);

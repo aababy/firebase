@@ -30,6 +30,7 @@ urlpatterns = [
     #ajax 的都要加到这里
     url(r'^ajax/message/', views.ajax_message, name='ajax_message'),
     url(r'^ajax/publish/', views.ajax_publish, name='ajax_publish'),
+    url(r'^ajax/get_graphs/', views.ajax_get_graphs, name='ajax_get_graphs'),
 ]
 
 if settings.DEBUG:
