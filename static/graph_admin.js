@@ -51,7 +51,8 @@
             }
 
             //检查是否跟已有的graph重名
-            if(checkFileName(file.name.slice(0, dot))) {
+            if(document.getElementById('id_name').value != '' || checkFileName(file.name.slice(0, dot))) {
+                document.getElementById('id_url').value = '';
                 storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
                     var url = snapshot.downloadURL;
                     let dot = file.name.indexOf('.');
@@ -88,7 +89,8 @@
             }
 
             //检查是否跟已有的graph重名
-            if(checkFileName(file.name.slice(0, dot))) {
+            if(document.getElementById('id_name').value != '' || checkFileName(file.name.slice(0, dot))) {
+                document.getElementById('id_original_url').value = '';
                 storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
                     var url = snapshot.downloadURL;
                     document.getElementById('id_original_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
