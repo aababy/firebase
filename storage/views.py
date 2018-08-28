@@ -23,7 +23,7 @@ def ajax_publish(request):
 
                 data = {}
                 data['name'] = query.name
-                data['tag_order'] = query.tag_order
+                data['tag_order'] = query.category_order
                 data['version'] = query.version
                 data['force_update_version'] = query.force_update_version
                 return HttpResponse(json.dumps(data), content_type='application/json')
@@ -42,8 +42,8 @@ def ajax_publish(request):
         for query in Graph.objects.order_by("-date"):
             data = {}
             data['name'] = query.name
-            tag_names = map(lambda x: x.name, query.tag.all())
-            data['tag'] = '|'.join(tag_names)
+            category_names = map(lambda x: x.name, query.category.all())
+            data['tag'] = '|'.join(category_names)
             data['date'] = str(query.date)
             data['subscription'] = query.subscription
             data['original'] = not query.starting
