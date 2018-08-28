@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from storage.models import App, Tag, Graph, Package, Feature
+from storage.models import App, Category, Graph, Package, Feature
 from django.contrib import messages
 from django.http import HttpResponseRedirect 
 from django.shortcuts import render_to_response
@@ -29,7 +29,7 @@ def ajax_publish(request):
                 return HttpResponse(json.dumps(data), content_type='application/json')
 
     elif name == 'tag':
-        for query in Tag.objects.all():
+        for query in Category.objects.all():
             data = {}
             data['name'] = query.name
             data['display_name'] = query.display_name

@@ -20,7 +20,7 @@ class App(models.Model):
     class Meta:
         unique_together = ["name",]
 
-class Tag(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=50)
     display_name = models.CharField(max_length=50, default="")
 
@@ -44,7 +44,7 @@ class Graph(models.Model):
         return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.GRAPH_PATH, self.name, settings.GRAPH_END))
     display.short_description = u'graph'
     
-    tag = models.ManyToManyField(Tag, blank=True)   # tag
+    tag = models.ManyToManyField(Category, blank=True)   # tag
     starting = models.BooleanField(default=False)
     subscription = models.BooleanField(default=True) #订阅
 
@@ -71,7 +71,7 @@ class Feature(models.Model):
     name = models.CharField(max_length=200, default="", blank=True)
     url = models.CharField(max_length=400, default="", blank=True) # URL
     order = models.IntegerField(default=1)
-    click = models.ForeignKey(Tag, blank=True, null=True)
+    click = models.ForeignKey(Category, blank=True, null=True)
 
     def display(self):
         return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.FEATURE_PATH, self.name, settings.FEATURE_END))

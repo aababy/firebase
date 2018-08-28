@@ -1,9 +1,9 @@
 from django import forms
 from django.forms import ModelForm  
-from .models import Graph, Tag 
+from .models import Graph, Category 
 
-class TagForm(forms.ModelForm):
+class CategoryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(TagForm, self).__init__(*args, **kwargs)
+        super(CategoryForm, self).__init__(*args, **kwargs)
         self.fields['cover'].queryset = Graph.objects.filter(tag=self.instance)
         

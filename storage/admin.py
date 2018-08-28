@@ -5,8 +5,8 @@ from django import forms
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from storage.models import App, Tag, Graph, Package, Feature
-from storage.forms import TagForm
+from storage.models import App, Category, Graph, Package, Feature
+from storage.forms import CategoryForm
 
 class AppAdmin(admin.ModelAdmin):
     class Media:
@@ -17,7 +17,7 @@ class AppAdmin(admin.ModelAdmin):
         "/static/firebase-jigsaw.js",
         "/static/app_admin.js")
 
-class TagAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'display_name', 'apps')
     list_filter = ['app']
     filter_horizontal = ('app',)
@@ -44,7 +44,7 @@ class GraphAdmin(admin.ModelAdmin):
 
     class tags_form(forms.forms.Form):  
         _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)  
-        data_src = forms.ModelChoiceField(Tag.objects)
+        data_src = forms.ModelChoiceField(Category.objects)
 
     def add_tags(modeladmin, request, queryset):
         form = None
@@ -61,7 +61,7 @@ class GraphAdmin(admin.ModelAdmin):
                 modeladmin.message_user(request, "%s item(s) successfully updated." % queryset.count())
                 return HttpResponseRedirect(request.get_full_path())
             else:
-                messages.warning(request, u"Tags must be selected. ")
+                messages.warning(request, u"Categorys must be selected. ")
                 form = None
 
         if not form:  
@@ -86,7 +86,7 @@ class GraphAdmin(admin.ModelAdmin):
                 modeladmin.message_user(request, "%s item(s) successfully updated." % queryset.count())
                 return HttpResponseRedirect(request.get_full_path())
             else:
-                messages.warning(request, u"Tags must be selected. ")
+                messages.warning(request, u"Categorys must be selected. ")
                 form = None
 
         if not form:
@@ -179,7 +179,7 @@ class FeatureAdmin(admin.ModelAdmin):
         "/static/feature_admin.js")
 
 admin.site.register(App, AppAdmin)
-admin.site.register(Tag, TagAdmin, form = TagForm)
+admin.site.register(Category, CategoryAdmin, form = CategoryForm)
 admin.site.register(Graph, GraphAdmin)
 admin.site.register(Package, PackageAdmin)
 admin.site.register(Feature, FeatureAdmin)
