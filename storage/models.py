@@ -10,7 +10,7 @@ from firebase import settings
 
 class App(models.Model):
     name = models.CharField(max_length=50)
-    tag_order = models.CharField(max_length=200, default="", blank=True)
+    category_order = models.CharField(max_length=200, default="", blank=True)
     version = models.IntegerField(default=1)
     force_update_version = models.IntegerField(default=1)
 
@@ -44,7 +44,7 @@ class Graph(models.Model):
         return mark_safe(u'<img src="%s%s%s" width="120px" />' %(settings.GRAPH_PATH, self.name, settings.GRAPH_END))
     display.short_description = u'graph'
     
-    tag = models.ManyToManyField(Category, blank=True)   # tag
+    category = models.ManyToManyField(Category, blank=True)   # tag
     starting = models.BooleanField(default=False)
     subscription = models.BooleanField(default=True) #订阅
 

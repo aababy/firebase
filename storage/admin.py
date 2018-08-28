@@ -23,40 +23,40 @@ class CategoryAdmin(admin.ModelAdmin):
     filter_horizontal = ('app',)
     search_fields = ['app__name']
 
-    def apps(self, tag):
-        app_names = map(lambda x: x.name, tag.app.all())
+    def apps(self, category):
+        app_names = map(lambda x: x.name, category.app.all())
         return ' | '.join(app_names)
 
 class GraphAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display', 'tags', 'starting', 'subscription', 'date')
+    list_display = ('name', 'display', 'categories', 'starting', 'subscription', 'date')
     readonly_fields = ('display',)
-    list_filter = ['tag']
-    filter_horizontal=('tag',)
-    search_fields = ['name', 'tag__name']
-    actions = ['add_tags', 'delete_tags', 'modify_subscription', 'modify_starting']
+    list_filter = ['category']
+    filter_horizontal=('category',)
+    search_fields = ['name', 'category__name']
+    actions = ['add_categories', 'delete_categories', 'modify_subscription', 'modify_starting']
 
     #list_per_page设置每页显示多少条记录，默认是100条
     list_per_page = 20
 
-    def tags(self, graph):
-        tag_names = map(lambda x: x.name, graph.tag.all())
-        return ' | '.join(tag_names)
+    def categories(self, graph):
+        category_names = map(lambda x: x.name, graph.category.all())
+        return ' | '.join(category_names)
 
-    class tags_form(forms.forms.Form):  
+    class categories_form(forms.forms.Form):  
         _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)  
         data_src = forms.ModelChoiceField(Category.objects)
 
-    def add_tags(modeladmin, request, queryset):
+    def add_categories(modeladmin, request, queryset):
         form = None
         if 'cancel' in request.POST:
             modeladmin.message_user(request, u'Action canceled.')
             return
         elif 'data_src' in request.POST:
-            form = modeladmin.tags_form(request.POST)
+            form = modeladmin.categories_form(request.POST)
             if form.is_valid():
                 data_src = form.cleaned_data['data_src']
                 for selected in queryset:
-                    selected.tag.add(data_src)
+                    selected.category.add(data_src)
                     selected.save()
                 modeladmin.message_user(request, "%s item(s) successfully updated." % queryset.count())
                 return HttpResponseRedirect(request.get_full_path())
@@ -65,23 +65,23 @@ class GraphAdmin(admin.ModelAdmin):
                 form = None
 
         if not form:  
-            form  = modeladmin.tags_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
+            form  = modeladmin.categories_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
         return render_to_response('batch_update.html',  
-                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'add_tags', 'title': u'Add tags'},  
+                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'add_categories', 'title': u'Add categories'},  
                                   context_instance=RequestContext(request))  
-    add_tags.short_description = u'Add tags'
+    add_categories.short_description = u'Add categories'
 
-    def delete_tags(modeladmin, request, queryset):
+    def delete_categories(modeladmin, request, queryset):
         form = None
         if 'cancel' in request.POST:
             modeladmin.message_user(request, u'Action canceled.')
             return
         elif 'data_src' in request.POST:
-            form = modeladmin.tags_form(request.POST)
+            form = modeladmin.categories_form(request.POST)
             if form.is_valid():
                 data_src = form.cleaned_data['data_src']
                 for selected in queryset:
-                    selected.tag.remove(data_src)
+                    selected.category.remove(data_src)
                     selected.save()
                 modeladmin.message_user(request, "%s item(s) successfully updated." % queryset.count())
                 return HttpResponseRedirect(request.get_full_path())
@@ -90,11 +90,11 @@ class GraphAdmin(admin.ModelAdmin):
                 form = None
 
         if not form:
-            form  = modeladmin.tags_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
+            form  = modeladmin.categories_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
         return render_to_response('batch_update.html',  
-                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'delete_tags', 'title': u'Delete tags'},  
+                                  {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'delete_categories', 'title': u'Delete categories'},  
                                   context_instance=RequestContext(request))
-    delete_tags.short_description = u'Delete tags'
+    delete_categories.short_description = u'Delete categories'
 
     def modify_subscription(modeladmin, request, queryset):
         form = None
@@ -111,7 +111,7 @@ class GraphAdmin(admin.ModelAdmin):
             modeladmin.message_user(request, "%s item(s) successfully add subscription." % queryset.count())
             return HttpResponseRedirect(request.get_full_path())
 
-        form  = modeladmin.tags_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
+        form  = modeladmin.categories_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
         return render_to_response('batch_update.html',  
                                   {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'modify_subscription', 'title': u'Modify subscription'},  
                                   context_instance=RequestContext(request))
@@ -132,7 +132,7 @@ class GraphAdmin(admin.ModelAdmin):
             modeladmin.message_user(request, "%s item(s) successfully turn on starting." % queryset.count())
             return HttpResponseRedirect(request.get_full_path())
 
-        form  = modeladmin.tags_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
+        form  = modeladmin.categories_form(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})  
         return render_to_response('batch_update.html',  
                                   {'objs': queryset, 'form': form, 'path':request.get_full_path(), 'action': 'modify_starting', 'title': u'Modify starting'},  
                                   context_instance=RequestContext(request))
