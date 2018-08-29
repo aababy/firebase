@@ -25,7 +25,7 @@ def staging():
     PROJECT_NAME='jigsaw_test'
     PROJECT_DIR = "/var/project/jigsaw_test/"
     env.user = "jigsaw"
-    env.hosts = ["10.0.2.251"]
+    env.hosts = ["118.31.32.144"]
 
 def prod():
     env.user = "jigsaw"
