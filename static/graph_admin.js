@@ -8,6 +8,9 @@
 
         if (window.location.pathname == '/storage/graph/') {
             var filesInfo = [];
+            var notUploadInfo = [];
+            var count = 0;
+            var total = 0;
             showGraphs();
         } else {
             var graphs = null;
@@ -148,10 +151,6 @@
             evt.preventDefault();
 
             filesInfo = [];
-            notUploadInfo = [];
-            uploadIndex = 0;
-            uploadRow = 0;
-
             let files = evt.target.files;
             setFilesInfo(files);
 
@@ -167,9 +166,6 @@
                 traditional: true, 
                 success: function(ret) {
                     if (ret.length == 0) {
-                        let log = 'uploading: ' + uploadIndex + '/' + filesInfo.length;
-                        $("#process").html(log);
-            
                         uploadFiles();
                     } else {
                         let log = "";
@@ -184,6 +180,22 @@
         }
 
         function uploadFiles() {
+            notUploadInfo = [];
+            count = 0;
+            total = 0;
+
+            for (let index = 0; index < filesInfo.length; index++) {
+                const info = filesInfo[index];
+                if (info.thumb != null && info.original != null) {
+                    total += 2;
+                } else {
+                    notUploadInfo.push(filesInfo[index].name);
+                }
+            }
+
+            let log = 'uploading: ' + count + '/' + total;
+            $("#process").html(log);
+
             for (let index = 0; index < filesInfo.length; index++) {
                 const info = filesInfo[index];
                 if (info.thumb != null && info.original != null) {
@@ -212,7 +224,24 @@
                     'url': url,
                     'original_url': original_url,
                 }, function (ret) {
-
+                    count++;
+                    let log = 'uploading: ' + count + '/' + total;
+                    $("#process").html(log);
+                    if (count >= total) {
+                        log = "";
+                        for (let i = 0; i < notUploadInfo.length; i++) {
+                            log += notUploadInfo[i] + " ";
+                        }
+            
+                        if (log.length == 0) {
+                            log = 'Upload succeed.'
+                        } else {
+                            log = 'Upload succeed. The following has NOT been add: ' + log
+                        }
+                        alert(log);
+                        $("#process").html("");
+                        window.location.reload();
+                    }
                 })
             }).catch(function (error) {
                 console.error('Upload failed:', error);
