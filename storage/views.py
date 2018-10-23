@@ -96,3 +96,37 @@ def ajax_get_graphs(request):
         jsonData.append(data)
 
     return HttpResponse(json.dumps(jsonData, sort_keys=True), content_type='application/json')
+
+def ajax_batch_check_graph(request):
+    data = request.GET.getlist('data')
+
+    found = []
+    for graph_name in data:
+        for query in Graph.objects.all():
+            if graph_name == query.name:
+                found.append(graph_name)
+
+    return HttpResponse(json.dumps(found, sort_keys=True), content_type='application/json')
+
+def ajax_batch_graphs(request):
+    name = str(request.GET.get('name'))
+    thumb_url = str(request.GET.get('url'))
+    original_url = str(request.GET.get('original_url'))
+
+    found = False
+    for query in Graph.objects.all():
+        if query.name == name:
+            found = True
+            if thumb_url != '':
+                query.url = thumb_url
+            if original_url != '':
+                query.original_url = original_url
+            query.save()
+            break
+
+    if found == False:
+        graph = Graph(name=name, url=thumb_url, original_url=original_url)
+        graph.save()
+
+    jsonData = []
+    return HttpResponse(json.dumps(jsonData, sort_keys=True), content_type='application/json')

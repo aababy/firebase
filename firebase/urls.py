@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^ajax/message/', views.ajax_message, name='ajax_message'),
     url(r'^ajax/publish/', views.ajax_publish, name='ajax_publish'),
     url(r'^ajax/get_graphs/', views.ajax_get_graphs, name='ajax_get_graphs'),
+    url(r'^ajax/batch_check_graph/', views.ajax_batch_check_graph, name='ajax_batch_check_graph'),
+    url(r'^ajax/batch_graphs/', views.ajax_batch_graphs, name='ajax_batch_graphs'),
 ]
 
 if settings.DEBUG:
