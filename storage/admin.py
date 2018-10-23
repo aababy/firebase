@@ -34,6 +34,7 @@ class GraphAdmin(admin.ModelAdmin):
     filter_horizontal=('category',)
     search_fields = ['name', 'category__name']
     actions = ['add_categories', 'delete_categories', 'modify_subscription', 'modify_starting']
+    list_editable = ['date', ]
 
     #list_per_page设置每页显示多少条记录，默认是100条
     list_per_page = 20

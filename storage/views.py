@@ -128,5 +128,12 @@ def ajax_batch_graphs(request):
         graph = Graph(name=name, url=thumb_url, original_url=original_url)
         graph.save()
 
+        category = name[0:name.find('_')].lower()
+        for query in Category.objects.all():
+            if query.name.lower() == category:
+                graph.category.add(query)
+                graph.save()
+                break
+
     jsonData = []
     return HttpResponse(json.dumps(jsonData, sort_keys=True), content_type='application/json')
