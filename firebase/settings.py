@@ -78,8 +78,8 @@ WSGI_APPLICATION = 'firebase.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(os.getcwd(), 'db.sqlite3'),
-        # 'NAME': '/var/project/jigsaw/db.sqlite3',
+        # 'NAME': os.path.join(os.getcwd(), 'db.sqlite3'),
+        'NAME': '/var/project/jigsaw/db.sqlite3',
     }
 }
 
