@@ -53,6 +53,7 @@ class Graph(models.Model):
 
     class Meta:
         unique_together = ["name",]
+        ordering=['-date']
 
 class Package(models.Model):
     name = models.CharField(max_length=200, default="", blank=True)
