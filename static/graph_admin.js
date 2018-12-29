@@ -143,6 +143,17 @@
                 this.name = name;
                 this.original = null;
                 this.thumb = null;
+
+                this.original_url = null;
+                this.thumb_url = null;
+            }
+
+            isReady() {
+                if (this.original_url != null && this.thumb_url != null) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -211,38 +222,40 @@
             };
 
             storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
-                let url = '';
-                let original_url = '';
+                count++;
+                let log = 'uploading: ' + count + '/' + total;
+                $("#process").html(log);
+
+                let info = getFileInfo(name);
                 if (file.name.indexOf('_thumb.jpg') != -1) {
-                    url = snapshot.downloadURL;
+                    info.thumb_url = snapshot.downloadURL;
                 } else {
-                    original_url = snapshot.downloadURL;
+                    info.original_url = snapshot.downloadURL;
                 }
-                //传数据给python
-                $.get("/ajax/batch_graphs/", {
-                    'name': name,
-                    'url': url,
-                    'original_url': original_url,
-                }, function (ret) {
-                    count++;
-                    let log = 'uploading: ' + count + '/' + total;
-                    $("#process").html(log);
-                    if (count >= total) {
-                        log = "";
-                        for (let i = 0; i < notUploadInfo.length; i++) {
-                            log += notUploadInfo[i] + " ";
+                if (info.isReady()) {
+                    //传数据给python
+                    $.get("/ajax/batch_graphs/", {
+                        'name': name,
+                        'url': info.thumb_url,
+                        'original_url': info.original_url,
+                    }, function (ret) {
+                        if (count >= total) {
+                            log = "";
+                            for (let i = 0; i < notUploadInfo.length; i++) {
+                                log += notUploadInfo[i] + " ";
+                            }
+
+                            if (log.length == 0) {
+                                log = 'Upload succeed.'
+                            } else {
+                                log = 'Upload succeed. The following has NOT been add: ' + log
+                            }
+                            alert(log);
+                            $("#process").html("");
+                            window.location.reload();
                         }
-            
-                        if (log.length == 0) {
-                            log = 'Upload succeed.'
-                        } else {
-                            log = 'Upload succeed. The following has NOT been add: ' + log
-                        }
-                        alert(log);
-                        $("#process").html("");
-                        window.location.reload();
-                    }
-                })
+                    })
+                }
             }).catch(function (error) {
                 console.error('Upload failed:', error);
                 alert('Upload failed.')

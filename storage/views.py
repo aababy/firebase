@@ -113,27 +113,15 @@ def ajax_batch_graphs(request):
     thumb_url = str(request.GET.get('url'))
     original_url = str(request.GET.get('original_url'))
 
-    found = False
-    for query in Graph.objects.all():
-        if query.name == name:
-            found = True
-            if thumb_url != '':
-                query.url = thumb_url
-            if original_url != '':
-                query.original_url = original_url
-            query.save()
+    graph = Graph(name=name, url=thumb_url, original_url=original_url)
+    graph.save()
+
+    category = name[0:name.find('_')].lower()
+    for query in Category.objects.all():
+        if query.name.lower() == category:
+            graph.category.add(query)
+            graph.save()
             break
-
-    if found == False:
-        graph = Graph(name=name, url=thumb_url, original_url=original_url)
-        graph.save()
-
-        category = name[0:name.find('_')].lower()
-        for query in Category.objects.all():
-            if query.name.lower() == category:
-                graph.category.add(query)
-                graph.save()
-                break
 
     jsonData = []
     return HttpResponse(json.dumps(jsonData, sort_keys=True), content_type='application/json')
