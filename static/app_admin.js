@@ -5,6 +5,8 @@
             return;
         }
         
+        $("#id_version").attr("disabled","disabled");
+
         firebase.initializeApp(config);
 
         var auth = firebase.auth();
