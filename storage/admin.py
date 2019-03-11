@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from storage.models import App, Category, Graph, Package, Feature
-from storage.forms import CategoryForm
+from storage.forms import CategoryForm, AppForm
 
 class AppAdmin(admin.ModelAdmin):
     class Media:
@@ -179,7 +179,7 @@ class FeatureAdmin(admin.ModelAdmin):
         "/static/firebase-jigsaw.js",
         "/static/feature_admin.js")
 
-admin.site.register(App, AppAdmin)
+admin.site.register(App, AppAdmin, form = AppForm)
 admin.site.register(Category, CategoryAdmin, form = CategoryForm)
 admin.site.register(Graph, GraphAdmin)
 admin.site.register(Package, PackageAdmin)
