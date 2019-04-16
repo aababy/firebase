@@ -5,6 +5,9 @@
             return;
         }
 
+        $('#id_version').attr("disabled", true);
+        $('.submit-row').click(beforeSubmit);
+
         firebase.initializeApp(config);
 
         var auth = firebase.auth();
@@ -25,6 +28,10 @@
                 auth.signInAnonymously();
             }
         });
+
+        function beforeSubmit(evt) {
+            $('#id_version').attr("disabled", false);
+        }
 
         function handlePublish(evt) {
             document.getElementById('id_publish').disabled = true;
