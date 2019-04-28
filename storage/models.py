@@ -33,6 +33,7 @@ class Category(models.Model):
 
     class Meta:
         unique_together = ["name",]
+        verbose_name_plural = 'Categories'
 
 class Graph(models.Model):
     name = models.CharField(max_length=200)                                     # 姓名
