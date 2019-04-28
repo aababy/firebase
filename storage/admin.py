@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from storage.models import App, Category, Graph, Package, Feature
 from storage.forms import CategoryForm, AppForm
+from storage.filter import CategoryFilter
 
 class AppAdmin(admin.ModelAdmin):
     class Media:
@@ -30,7 +31,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class GraphAdmin(admin.ModelAdmin):
     list_display = ('name', 'display', 'categories', 'starting', 'subscription', 'date')
     readonly_fields = ('display',)
-    list_filter = ['category']
+    list_filter = [CategoryFilter, ]
     filter_horizontal=('category',)
     search_fields = ['name', 'category__name']
     actions = ['add_categories', 'delete_categories', 'modify_subscription', 'modify_starting']
