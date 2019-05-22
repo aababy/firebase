@@ -304,11 +304,11 @@
                                 }
                                 info.original = files[index];  
                             }
+                            total++;
+                            if (total == files.length) {
+                                callback();
+                            }
                         });
-                        total++;
-                        if (total == files.length) {
-                            callback();
-                        }
                     }
                 }
             }
