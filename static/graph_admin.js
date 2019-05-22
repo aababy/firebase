@@ -75,28 +75,32 @@
                 return;
             }
 
-            //检查是否跟已有的graph重名
-            if(document.getElementById('id_name').value != '' || checkFileName(file.name.slice(0, dot))) {
-                document.getElementById('id_url').value = '';
-                storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
-                    var url = snapshot.downloadURL;
-                    let dot = file.name.indexOf('.');
-                    let name = file.name.slice(0, dot);
-    
-                    let thumb = name.indexOf('_thumb');                 //fix thumb name
-                    if (thumb != -1) {
-                        name = name.slice(0, thumb);
+            checkImageWidth(file, 512, function(succeed){
+                if (succeed) {
+                    //检查是否跟已有的graph重名
+                    if(document.getElementById('id_name').value != '' || checkFileName(file.name.slice(0, dot))) {
+                        document.getElementById('id_url').value = '';
+                        storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
+                            var url = snapshot.downloadURL;
+                            let dot = file.name.indexOf('.');
+                            let name = file.name.slice(0, dot);
+            
+                            let thumb = name.indexOf('_thumb');                 //fix thumb name
+                            if (thumb != -1) {
+                                name = name.slice(0, thumb);
+                            }
+                            
+                            document.getElementById('id_name').value = name;
+                            document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
+                        }).catch(function (error) {
+                            console.error('Upload failed:', error);
+                            alert('Upload failed.')
+                        });
+                    } else {
+                        alert('Your file name is repeated with others!')
                     }
-                    
-                    document.getElementById('id_name').value = name;
-                    document.getElementById('id_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
-                }).catch(function (error) {
-                    console.error('Upload failed:', error);
-                    alert('Upload failed.')
-                });
-            } else {
-                alert('Your file name is repeated with others!')
-            }
+                }
+            });
         }
 
         function handleFileSelectOriginal(evt) {
@@ -113,19 +117,23 @@
                 return;
             }
 
-            //检查是否跟已有的graph重名
-            if(document.getElementById('id_name').value != '' || checkFileName(file.name.slice(0, dot))) {
-                document.getElementById('id_original_url').value = '';
-                storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
-                    var url = snapshot.downloadURL;
-                    document.getElementById('id_original_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
-                }).catch(function (error) {
-                    console.error('Upload failed:', error);
-                    alert('Upload failed.')
-                });
-            } else {
-                alert('Your file name is repeated with others!')
-            }
+            checkImageWidth(file, 2048, function(succeed){
+                if (succeed) {
+                    //检查是否跟已有的graph重名
+                    if(document.getElementById('id_name').value != '' || checkFileName(file.name.slice(0, dot))) {
+                        document.getElementById('id_original_url').value = '';
+                        storageRef.child('jigsaw/graphs/' + file.name).put(file, metadata).then(function (snapshot) {
+                            var url = snapshot.downloadURL;
+                            document.getElementById('id_original_url').value = url;    //$('#id_test1').val(url); //$('#id_test1')[0].value = url;
+                        }).catch(function (error) {
+                            console.error('Upload failed:', error);
+                            alert('Upload failed.')
+                        });
+                    } else {
+                        alert('Your file name is repeated with others!')
+                    }
+                }
+            });
         }
 
         function checkFileName(name) {
@@ -329,7 +337,7 @@
                     let width = image.width;
                     let height = image.height;
                     if (width != measure || height != measure) {
-                        alert(filename + ' is NOT ' + measure + ', please delete it and re upload!');
+                        alert(filename + ' is NOT ' + measure + ', please re upload it!');
                         callback(false);
                     } else if (callback != undefined) {
                         callback(true);
