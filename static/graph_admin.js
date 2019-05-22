@@ -163,30 +163,30 @@
 
             filesInfo = [];
             let files = evt.target.files;
-            setFilesInfo(files);
-
-            let names = [];
-            for (let i = 0; i < filesInfo.length; i++) {
-                names.push(filesInfo[i].name);
-            }
-
-            $.ajax({
-                url: "/ajax/batch_check_graph/",
-                type: "GET",
-                data: {"data": names},
-                traditional: true, 
-                success: function(ret) {
-                    if (ret.length == 0) {
-                        uploadFiles();
-                    } else {
-                        let log = "";
-                        for (let index = 0; index < ret.length; index++) {
-                            log += ret[index] + " ";
-                        }
-                        log = 'The following file names are repeated with others : ' + log + ' Please do NOT upload them use batch.';
-                        alert(log);
-                    }
+            setFilesInfo(files, function () {
+                let names = [];
+                for (let i = 0; i < filesInfo.length; i++) {
+                    names.push(filesInfo[i].name);
                 }
+    
+                $.ajax({
+                    url: "/ajax/batch_check_graph/",
+                    type: "GET",
+                    data: {"data": names},
+                    traditional: true, 
+                    success: function(ret) {
+                        if (ret.length == 0) {
+                            uploadFiles();
+                        } else {
+                            let log = "";
+                            for (let index = 0; index < ret.length; index++) {
+                                log += ret[index] + " ";
+                            }
+                            log = 'The following file names are repeated with others : ' + log + ' Please do NOT upload them use batch.';
+                            alert(log);
+                        }
+                    }
+                });
             });
         }
 
@@ -262,30 +262,45 @@
             });
         }
 
-        function setFilesInfo(files) {
+        function setFilesInfo(files, callback) {
+            let total = 0;
             for (let index = 0; index < files.length; index++) {
                 let name = files[index].name;
                 let dot = name.indexOf('_thumb.jpg');
                 if (dot != -1) {
-                    checkImageWidth(files[index], 512);
-                    name = name.slice(0, dot);
-                    let info = getFileInfo(name);
-                    if (info == null) {
-                        info = new Info(name);
-                        filesInfo.push(info);
-                    }
-                    info.thumb = files[index];
+                    checkImageWidth(files[index], 512, function(succeed){
+                        if (succeed) {
+                            name = name.slice(0, dot);
+                            let info = getFileInfo(name);
+                            if (info == null) {
+                                info = new Info(name);
+                                filesInfo.push(info);
+                            }
+                            info.thumb = files[index];
+                        }
+                        total++;
+                        if (total == files.length) {
+                            callback();
+                        }
+                    });
                 } else {
                     dot = name.indexOf('.jpg');
                     if (dot != -1) {
-                        checkImageWidth(files[index], 2048);
-                        name = name.slice(0, dot);
-                        let info = getFileInfo(name);
-                        if (info == null) {
-                            info = new Info(name);
-                            filesInfo.push(info);
+                        checkImageWidth(files[index], 2048, function(succeed){
+                            if (succeed) {
+                                name = name.slice(0, dot);
+                                let info = getFileInfo(name);
+                                if (info == null) {
+                                    info = new Info(name);
+                                    filesInfo.push(info);
+                                }
+                                info.original = files[index];  
+                            }
+                        });
+                        total++;
+                        if (total == files.length) {
+                            callback();
                         }
-                        info.original = files[index];
                     }
                 }
             }
@@ -301,7 +316,7 @@
             return null;
         }
 
-        function checkImageWidth(file, measure) {
+        function checkImageWidth(file, measure, callback) {
             let filename = file.name
             //创建读取文件的对象  
             let reader = new FileReader();
@@ -315,6 +330,9 @@
                     let height = image.height;
                     if (width != measure || height != measure) {
                         alert(filename + ' is NOT ' + measure + ', please delete it and re upload!');
+                        callback(false);
+                    } else if (callback != undefined) {
+                        callback(true);
                     }
                 };
                 image.src = data;
