@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import json
+from datetime import datetime,timedelta
+
 
 def ajax_publish(request):
     name = str(request.GET.get('filename'))
@@ -113,7 +115,12 @@ def ajax_batch_graphs(request):
     thumb_url = str(request.GET.get('url'))
     original_url = str(request.GET.get('original_url'))
 
-    graph = Graph(name=name, url=thumb_url, original_url=original_url)
+    date = datetime.now()
+    for daily in Graph.objects.order_by('-date'):
+        date = daily.date + timedelta(days=1)
+        break
+
+    graph = Graph(name=name, url=thumb_url, original_url=original_url, date=date)
     graph.save()
 
     category = name[0:name.find('_')].lower()
