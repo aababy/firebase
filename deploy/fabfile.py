@@ -45,7 +45,7 @@ def upload():
 
 def extract():
     with cd(PROJECT_DIR):
-        run("tar xf {}.tar.gz".format(PROJECT_NAME))
+        run("sudo tar xf {}.tar.gz".format(PROJECT_NAME))
 
 
 def deploy():
