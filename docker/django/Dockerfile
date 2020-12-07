@@ -40,5 +40,5 @@ RUN pip install -r /home/code/jigsaw/requirements.txt
 # uwsgi.ini 及 uwsgi_params
 COPY . /home/code/
 
-EXPOSE 981
+EXPOSE 80
 CMD ["supervisord", "-n"]
